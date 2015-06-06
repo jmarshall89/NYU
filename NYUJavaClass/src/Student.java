@@ -49,7 +49,7 @@ public class Student {
 	public String toString() {
 		
 //		Create a new line variable
-		String nl = "/n";
+		String nl = " ";
 		String info = "Class Name: " + className + nl +
 		"Class Instructor: " + instructor + nl +
 		"Class Number: " + classNumber + nl +
