@@ -1,5 +1,5 @@
 
-public class Student {
+public abstract class Student {
 
 //	Private Static fields
 	private static int classNumber;
@@ -16,6 +16,7 @@ public class Student {
 	private String city;
 	private String state;
 	private String email;
+	Course[] courses = new Course[50];
 	
 //	Short constructor
 	public Student(String firstname, String lastname) {
@@ -50,6 +51,19 @@ public class Student {
 		
 //		Create a new line variable
 		String nl = " ";
+		String coursesTaken = "";
+
+//		Loop through array of courses and print those which the student has taken
+		for (int i = 0; i < courses.length; i++) {
+			if (courses[i] != null) {
+				if (coursesTaken == "") {
+					coursesTaken = "" + courses[i].getCourseId();
+				} else {
+					coursesTaken += ", " + courses[i].getCourseId();
+				}
+			}
+		}
+
 		String info = "Class Name: " + className + nl +
 		"Class Instructor: " + instructor + nl +
 		"Class Number: " + classNumber + nl +
@@ -58,10 +72,10 @@ public class Student {
 		"Student Email " + email + nl +
 		"Address:" + nl +
 		address + nl +
-		city + ", " + state;
+		city + ", " + state + nl +
+		"Courses taken: " + coursesTaken;
 		
 		return info;
-		
 	}
 	
 //	Getter and setter methods for static fields
@@ -127,8 +141,26 @@ public class Student {
 		this.email = email;
 	}
 	
-	
-	
+	public void addCourse(Course course){
+//		Find where the next null value is
+		int i = 0;
+
+		while(courses[i] != null){
+			i++;
+		}
+		courses[i] = course;
+	}
+
+	abstract void isGraduateEligable();
+	abstract void printGraduateStatus();
+
+	public void printCourses() {
+		for (int i = 0; i < courses.length; i++) {
+			if ( courses[i] != null ){
+				System.out.println(courses[i].toString());
+			}
+		}
+	}
 	
 	
 	
