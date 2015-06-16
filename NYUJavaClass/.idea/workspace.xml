@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="47d2a176-2a11-476b-ae5c-5160b54e3a05" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/CollegeStudent.java" afterPath="$PROJECT_DIR$/src/CollegeStudent.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/HighSchoolStudent.java" afterPath="$PROJECT_DIR$/src/HighSchoolStudent.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Student.java" afterPath="$PROJECT_DIR$/src/Student.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Course.java" afterPath="$PROJECT_DIR$/src/Course.java" />
     </list>
     <ignored path="NYUJavaClass.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -30,9 +28,12 @@
       <file leaf-file-name="Course.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Course.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3584559">
-              <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.8069853">
+              <caret line="77" column="0" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
               <folding>
+                <element signature="e#624#625#0" expanded="true" />
+                <element signature="e#655#656#0" expanded="true" />
+                <element signature="e#903#904#0" expanded="true" />
                 <element signature="e#931#932#0" expanded="true" />
                 <element signature="e#1379#1380#0" expanded="true" />
                 <element signature="e#1413#1414#0" expanded="true" />
@@ -65,7 +66,7 @@
         <entry file="file://$PROJECT_DIR$/src/StudentTest.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="29" column="28" selection-start-line="29" selection-start-column="28" selection-end-line="29" selection-end-column="28" />
+              <caret line="7" column="47" selection-start-line="7" selection-start-column="47" selection-end-line="7" selection-end-column="47" />
               <folding />
             </state>
           </provider>
@@ -102,14 +103,14 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/Course.java" />
         <option value="$PROJECT_DIR$/src/NYUJavaClass.java" />
         <option value="$PROJECT_DIR$/src/ClassTest.java" />
         <option value="$PROJECT_DIR$/src/RandomGrade.java" />
         <option value="$PROJECT_DIR$/src/Student.java" />
-        <option value="$PROJECT_DIR$/src/StudentTest.java" />
         <option value="$PROJECT_DIR$/src/HighSchoolStudent.java" />
         <option value="$PROJECT_DIR$/src/CollegeStudent.java" />
+        <option value="$PROJECT_DIR$/src/StudentTest.java" />
+        <option value="$PROJECT_DIR$/src/Course.java" />
       </list>
     </option>
   </component>
@@ -481,12 +482,12 @@
       <option name="number" value="Default" />
       <updated>1434120081919</updated>
       <workItem from="1434120091500" duration="10886000" />
-      <workItem from="1434163055147" duration="3372000" />
+      <workItem from="1434163055147" duration="5226000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="14258000" />
+    <option name="totallyTimeSpent" value="16112000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -550,6 +551,9 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="9" column="1" selection-start-line="9" selection-start-column="1" selection-end-line="12" selection-end-column="37" />
           <folding>
+            <element signature="e#624#625#0" expanded="true" />
+            <element signature="e#655#656#0" expanded="true" />
+            <element signature="e#903#904#0" expanded="true" />
             <element signature="e#931#932#0" expanded="true" />
             <element signature="e#1379#1380#0" expanded="true" />
             <element signature="e#1413#1414#0" expanded="true" />
@@ -671,14 +675,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/StudentTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="29" column="28" selection-start-line="29" selection-start-column="28" selection-end-line="29" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Student.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-15.0">
@@ -703,11 +699,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/StudentTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="7" column="47" selection-start-line="7" selection-start-column="47" selection-end-line="7" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Course.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3584559">
-          <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.8069853">
+          <caret line="77" column="0" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
           <folding>
+            <element signature="e#624#625#0" expanded="true" />
+            <element signature="e#655#656#0" expanded="true" />
+            <element signature="e#903#904#0" expanded="true" />
             <element signature="e#931#932#0" expanded="true" />
             <element signature="e#1379#1380#0" expanded="true" />
             <element signature="e#1413#1414#0" expanded="true" />

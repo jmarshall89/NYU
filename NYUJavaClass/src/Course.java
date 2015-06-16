@@ -64,12 +64,12 @@ public class Course {
     public String toString(){
 
         String val;
-        String nl = "/n";
+        String nl = "\n";
 
         val =   "Course ID: " + courseId + nl +
                 "Description: " + description + nl +
                 "Instructor: " + instructor + nl +
-                "Number of Credits" + numberOfCredits + nl +
+                "Number of Credits: " + numberOfCredits + nl +
                 "Grade: " + grade;
         return val;
     }
