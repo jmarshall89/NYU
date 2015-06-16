@@ -17,9 +17,10 @@ public class CollegeStudent extends Student {
         for (int i = 0; i < courses.length; i++) {
             if (courses[i] != null) {
                 totCredits += courses[i].getNumberOfCredits();
-            }
-            if (courses[i].getGrade() < gradeCutoff) {
-                passed = false;
+
+                if (courses[i].getGrade() < gradeCutoff) {
+                    passed = false;
+                }
             }
 
         }

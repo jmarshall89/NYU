@@ -16,7 +16,7 @@ public abstract class Student {
 	private String city;
 	private String state;
 	private String email;
-	Course[] courses = new Course[50];
+	Course[] courses;
 	
 //	Short constructor
 	public Student(String firstname, String lastname) {
@@ -28,6 +28,7 @@ public abstract class Student {
 		instructor = "Sam Sultan";
 		studentCount++;
 		studentId = studentId + studentCount;
+		courses = new Course[50];
 		
 	}
 	
