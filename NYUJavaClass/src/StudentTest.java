@@ -20,7 +20,7 @@ public class StudentTest {
 //        Course business = new Course(103, "Learn about business", "Whaley", 50);
 //        Course philosphy = new Course(203, "Get an easy A", "Toto", 50);
 
-        /*  All high school studetns will take the high school classes, and all the college students
+        /*  All high school student will take the high school classes, and all the college students
             will take the college classes
 
             The grades will be set by a normal distribution with a mean of 85 and standard deviation
