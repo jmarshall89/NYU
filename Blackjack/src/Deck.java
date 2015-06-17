@@ -70,7 +70,12 @@ public class Deck {
         return s;
     }
 
-
+    public Card drawCard() {
+        Card c;
+        c = cards.get(0);
+        cards.remove(0);
+        return c;
+    }
 
 
 

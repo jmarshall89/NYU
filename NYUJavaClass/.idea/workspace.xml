@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="47d2a176-2a11-476b-ae5c-5160b54e3a05" name="Default" comment="" />
+    <list default="true" id="47d2a176-2a11-476b-ae5c-5160b54e3a05" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Blackjack/src/Deck.java" afterPath="$PROJECT_DIR$/../Blackjack/src/Deck.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Blackjack/src/MainTest.java" afterPath="$PROJECT_DIR$/../Blackjack/src/MainTest.java" />
+    </list>
     <ignored path="NYUJavaClass.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/bin/" />

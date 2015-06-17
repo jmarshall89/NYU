@@ -4,7 +4,17 @@
 public class MainTest {
     public static void main(String[] args) {
         Deck d = new Deck("Deck 1");
+        Player p = new Player("Josh");
 
-        System.out.println(d.toString());
+        System.out.println(p.getBank());
+        p.addCard(d.drawCard());
+        p.addCard(d.drawCard());
+        p.setBet(3.0);
+        p.setBank(100);
+        System.out.println(p.showHand());
+        System.out.println(p.getPoints());
+
+
+
     }
 }
