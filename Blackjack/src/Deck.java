@@ -24,6 +24,10 @@ public class Deck {
         shuffleDeck();
     }
 
+    public List<Card> getCards() {
+        return cards;
+    }
+
     public String getDeckName() {
         return deckName;
     }

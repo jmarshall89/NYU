@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Dealer extends Person {
 
     public Dealer() {
-        super();
+        super("Dealer");
     }
 
     private static final int hitOn = 16;

@@ -46,4 +46,15 @@ public class DealerDeck {
         deckNum++;
     }
 
+    public int cardCount() {
+//        Test mod to get the number of cards in the deck
+
+        int count = 0;
+
+        for (Deck d: fullDeck) {
+            count += d.getCards().size();
+        }
+        return count;
+    }
+
 }

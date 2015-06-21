@@ -4,16 +4,16 @@
 public class MainTest {
     public static void main(String[] args) {
 //        Deck d = new Deck("Deck 1");
-        Player p = new Player("Josh");
+        Person p = new Player("Josh");
+        Person d = new Dealer();
         DealerDeck dd = new DealerDeck(6);
 
-//        System.out.println(p.getBank());
-        p.addCard(dd.draw());
-//        p.addCard(d.drawCard());
-        p.setBet(3.0);
-        p.setBank(100);
-        System.out.println(p.showHand());
-        System.out.println(p.getPoints());
+        System.out.println(dd.cardCount());
+        p.hit(dd);
+        d.hit(dd);
+        System.out.println(d.showHand());
+        System.out.println(dd.cardCount());
+
 
 
 

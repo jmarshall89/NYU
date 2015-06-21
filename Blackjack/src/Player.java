@@ -29,7 +29,9 @@ public class Player extends Person {
         return bet;
     }
 
-
+    public void hit(DealerDeck dd) {
+        addCard(dd.draw());
+    }
 
     public void setBet(double bet) {
         this.bet = bet;

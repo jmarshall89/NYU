@@ -74,6 +74,5 @@ public abstract class Person {
     }
 
 
-
-
+    public abstract void hit(DealerDeck dd);
 }
