@@ -77,6 +77,15 @@ public class Deck {
         return c;
     }
 
+    public boolean deckEmpty(){
+        int count;
+        count = cards.size();
+        if (count <= 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 
 }
