@@ -30,7 +30,19 @@ public class Player extends Person {
     }
 
     public void hit(DealerDeck dd) {
-        addCard(dd.draw());
+        Card c = dd.draw();
+        addCard(c);
+        System.out.println("Player " + getName() + " drew a " + c.toString());
+    }
+
+    public void stay(){
+        String stayString;
+        String nl = "\n";
+
+        stayString = "Player " + getName() + " stays." + nl + "Points: " + getPoints()
+                     + nl + "Cards showing: " + getHand().toString() + nl;
+
+        System.out.println(stayString);
     }
 
     public void setBet(double bet) {
@@ -64,5 +76,38 @@ public class Player extends Person {
         this.bank = ((bet) * (3/2));
     }
 
+    private boolean isBust(int dealerPts){
+        return (getPoints() > 21);
+    }
+
+    public boolean isPush(int dealerPts) {
+        return (getPoints() == dealerPts);
+    }
+
+    public boolean playerWin(int dealerPts){
+        if (isBust(dealerPts)) {
+            return false;
+        }
+
+        if (getPoints() > dealerPts) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean isBlackjack() {
+        if (getPoints() == 21) {
+            System.out.println("Blackjack! Player wins 3 to 2!");
+            winBlackjack();
+            return true;
+        }
+        return false;
+    }
+
+    public void initialShowing(){
+        System.out.println("" + getName() + " showing: ");
+        showHand();
+    }
 
 }

@@ -18,7 +18,7 @@ public class Dealer extends Person {
         }
     }
 
-    public String dealerShowing() {
+    public String initialShowing() {
         List<Card> hand = getHand();
         String s = "Dealer Showing: " + hand.get(0);
         return s;

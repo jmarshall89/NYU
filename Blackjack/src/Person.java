@@ -75,4 +75,6 @@ public abstract class Person {
 
 
     public abstract void hit(DealerDeck dd);
+
+    public abstract void initialShowing();
 }
