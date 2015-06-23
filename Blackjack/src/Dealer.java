@@ -13,15 +13,36 @@ public class Dealer extends Person {
     private static final int hitOn = 16;
 
     public void hit(DealerDeck dd) {
-        while (getPoints() <= hitOn) {
-            addCard(dd.draw());
-        }
+        addCard(dd.draw());
     }
 
-    public String initialShowing() {
+    public void initialShowing() {
         List<Card> hand = getHand();
         String s = "Dealer Showing: " + hand.get(0);
-        return s;
+        System.out.println(s);
+    }
+
+    @Override
+    public boolean isBust(int dealerPts) {
+        if (dealerPts > 21) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean isPush(int dealerPts) {
+        return false;
+    }
+
+    @Override
+    public boolean playerWin(int dealerPts) {
+        return false;
+    }
+
+    @Override
+    public boolean isBlackjack() {
+        return false;
     }
 
     public String dealerCardCount() {

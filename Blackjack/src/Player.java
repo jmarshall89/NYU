@@ -7,26 +7,12 @@ import java.util.List;
  */
 public class Player extends Person {
 
-    private double bank;
-    private double bet;
-
-
     public Player(String name) {
         this();
     }
 
-    public Player(){
+    public Player() {
         super();
-        bank = 0.0d;
-        bet = 0.0d;
-    }
-
-    public double getBank() {
-        return bank;
-    }
-
-    public double getBet() {
-        return bet;
     }
 
     public void hit(DealerDeck dd) {
@@ -45,38 +31,7 @@ public class Player extends Person {
         System.out.println(stayString);
     }
 
-    public void setBet(double bet) {
-        this.bet = bet;
-    }
-
-    public void setBank(double bank) {
-        this.bank = bank;
-    }
-
-    public void resetBet(){
-        this.bet = 0.0d;
-    }
-
-    public void winStandard() {
-        this.bank += this.bet;
-    }
-
-    public void loseStandard() {
-        this.bank -= this.bet;
-        if (bank < 0) {
-            this.bank = 0;
-        }
-    }
-
-    public void doubleDown() {
-        this.bet = bet * 2;
-    }
-
-    public void winBlackjack() {
-        this.bank = ((bet) * (3/2));
-    }
-
-    private boolean isBust(int dealerPts){
+    public boolean isBust(int dealerPts){
         return (getPoints() > 21);
     }
 
@@ -86,7 +41,7 @@ public class Player extends Person {
 
     public boolean playerWin(int dealerPts){
         if (isBust(dealerPts)) {
-            return false;
+            return true;
         }
 
         if (getPoints() > dealerPts) {
