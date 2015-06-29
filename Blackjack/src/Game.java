@@ -39,7 +39,12 @@ public class Game {
 //            Set player bet
             players.get(0).setBet(gameI.setBet(players.get(0).getName()));
             ai.initialDeal(dd);
+            game.playerPlay(players.get(0),gameI, dd);
+            ai.aiPlay(dd);
+            ai.results();
             gameOn = false;
+
+//            todo: test this
 
 
 

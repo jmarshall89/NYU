@@ -123,6 +123,8 @@ public abstract class Person {
 
     public abstract void hit(DealerDeck dd);
 
+    public abstract void stay();
+
     public abstract void initialShowing();
 
     public abstract boolean isBust(int dealerPts);
