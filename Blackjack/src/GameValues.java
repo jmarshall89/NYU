@@ -21,18 +21,6 @@ public class GameValues {
         System.out.print(intro);
     }
 
-    public List<Person> buildPlayers(String p1name, int numPlayers){
-        List<Person> persons = new ArrayList<>();
-        persons.add(new Player(p1name));
-        for (int i = 0; i < numPlayers; i++) {
-            persons.add(new Player("Player " + (i + 2)));
-            persons.get(i + 1).setBank(0);
-        }
-        persons.add(new Dealer());
-        return persons;
-    }
-
-
 
 
 

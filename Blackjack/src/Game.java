@@ -27,12 +27,23 @@ public class Game {
 //        Now create the players and deck
         dd = new DealerDeck(decks);
         String name = gameI.setName();
-        players = game.buildPlayers(name, numPlayers);
+        AIPlayers ai = new AIPlayers(numPlayers, name);
+        players = ai.getPlayers();
 
 //        Finally the player can set their bankroll
         players.get(0).setBank(gameI.setBank());
-        System.out.println(players.get(0).getBank());
 
+//        Now the game logic
+        while (gameOn) {
+
+//            Set player bet
+            players.get(0).setBet(gameI.setBet(players.get(0).getName()));
+            ai.initialDeal(dd);
+            gameOn = false;
+
+
+
+        }
 
 
 

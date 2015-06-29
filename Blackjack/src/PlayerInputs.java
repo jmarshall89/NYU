@@ -28,8 +28,8 @@ public class PlayerInputs {
         return sc.nextDouble();
     }
 
-    public double setBet(){
-        print("Enter bet: ");
+    public double setBet(String name){
+        print(name + ", enter your bet: ");
         return sc.nextDouble();
     }
 

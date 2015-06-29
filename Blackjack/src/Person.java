@@ -112,7 +112,7 @@ public abstract class Person {
     }
 
     public String showHand() {
-        String show = name + "showing: \n";
+        String show = name + " showing: \n";
         String nl = "\n";
         for (Card c: hand) {
             show += c.toString() + nl;

@@ -9,6 +9,7 @@ public class Player extends Person {
 
     public Player(String name) {
         this();
+        this.setName(name);
     }
 
     public Player() {
@@ -61,8 +62,8 @@ public class Player extends Person {
     }
 
     public void initialShowing(){
-        System.out.println("" + getName() + " showing: ");
-        showHand();
+//        System.out.println("" + getName() + " showing: ");
+        System.out.println(showHand());
     }
 
 }
