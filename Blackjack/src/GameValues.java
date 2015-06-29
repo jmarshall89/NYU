@@ -1,3 +1,6 @@
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -18,20 +21,15 @@ public class GameValues {
         System.out.print(intro);
     }
 
-    public int getDecks(){
-        int decks;
-        System.out.print("How many decks would you like to use?  ");
-        decks = in.nextInt();
-
-        return decks;
-    }
-
-    public int getAiPlayers(){
-        int players;
-        System.out.print("How many AI players would you like to join?  ");
-        players = in.nextInt();
-
-        return players;
+    public List<Person> buildPlayers(String p1name, int numPlayers){
+        List<Person> persons = new ArrayList<>();
+        persons.add(new Player(p1name));
+        for (int i = 0; i < numPlayers; i++) {
+            persons.add(new Player("Player " + (i + 2)));
+            persons.get(i + 1).setBank(0);
+        }
+        persons.add(new Dealer());
+        return persons;
     }
 
 

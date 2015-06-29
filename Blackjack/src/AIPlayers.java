@@ -7,7 +7,7 @@ import java.util.List;
 public class AIPlayers {
     private List<Person> players = new ArrayList<Person>();
     private int playerNum = 2;
-    private int dealerIndex = 0;
+    private static int dealerIndex = 0;
     private int hitOn = 16;
 
     public AIPlayers(int numPlayers, String p1Name){

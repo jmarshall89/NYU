@@ -1,0 +1,71 @@
+import java.util.Scanner;
+
+/**
+ * Created by jmarshall on 6/29/15.
+ */
+public class PlayerInputs {
+
+    private Scanner sc = new Scanner(System.in);
+
+    public int setDecks(){
+        int decks;
+        System.out.print("How many decks would you like to use?  ");
+        decks = sc.nextInt();
+
+        return decks;
+    }
+
+    public int setPlayerNumber(){
+        int players;
+        System.out.print("How many AI players would you like to join?  ");
+        players = sc.nextInt();
+
+        return players;
+    }
+
+    public double setBank(){
+        print("Enter value of Bank: $");
+        return sc.nextDouble();
+    }
+
+    public double setBet(){
+        print("Enter bet: ");
+        return sc.nextDouble();
+    }
+
+    public String setAction(){
+        print("Choose your action \n (h)it, (s)tay, (d)ouble down: ");
+        String action = sc.next();
+        action = action.toLowerCase();
+
+        if (action.equals("h") || action.equals("hit")) {
+            return "h";
+        } else if (action.equals("s") || action.equals("stay")) {
+            return "s";
+        } else if (action.equals("d") || action.equals("double") || action.equals("dd")
+                || action.equals("double down")) {
+            return "d";
+        }
+        return "error";
+    }
+
+    public boolean continueGame(){
+        print("Play again? ");
+        String ans = sc.next();
+        if (ans.equals("y") || ans.equals("yes")){
+            return true;
+        }
+        print("Goodbye!");
+        return false;
+    }
+
+    public String setName() {
+        print("Please enter your name: ");
+        return sc.next();
+    }
+
+    private void print(String s){
+        System.out.print(s);
+    }
+
+}

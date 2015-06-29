@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,18 +13,25 @@ public class Game {
         int numPlayers;
         int decks;
         DealerDeck dd;
-        List<Person> players;
+        List<Person> players = new ArrayList<>();
+        PlayerInputs gameI = new PlayerInputs();
         GameValues game = new GameValues();
 
 //        First we need to set up the game
 //        Game on!
         gameOn = true;
         game.getIntro();
-        decks = game.getDecks();
-        numPlayers = game.getAiPlayers();
+        decks = gameI.setDecks();
+        numPlayers = gameI.setPlayerNumber();
 
 //        Now create the players and deck
         dd = new DealerDeck(decks);
+        String name = gameI.setName();
+        players = game.buildPlayers(name, numPlayers);
+
+//        Finally the player can set their bankroll
+        players.get(0).setBank(gameI.setBank());
+        System.out.println(players.get(0).getBank());
 
 
 
