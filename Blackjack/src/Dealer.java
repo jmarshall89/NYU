@@ -52,4 +52,8 @@ public class Dealer extends Person {
         return s;
     }
 
+    @Override
+    public void stay() {
+        return;
+    }
 }

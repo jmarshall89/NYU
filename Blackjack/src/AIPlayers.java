@@ -57,7 +57,8 @@ public class AIPlayers {
     public void results(){
         int dealerPts;
         dealerPts = players.get(dealerIndex).getPoints();
-        for (int i = 0; i < players.size() - 1; i++) {
+        players.get(dealerIndex).showHand();
+        for (int i = 0; i < players.size(); i++) {
             Person p = players.get(i);
             System.out.println(p.showHand());
             if (p.isBust(p.getPoints()) || p.isBlackjack()) {
