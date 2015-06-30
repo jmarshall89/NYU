@@ -9,6 +9,8 @@ public class AIPlayers {
     private int playerNum = 2;
     private static int dealerIndex = 0;
     private int hitOn = 16;
+    AILogic ai = new AILogic();
+    GameValues gv = new GameValues();
 
     public AIPlayers(int numPlayers, String p1Name){
 //        Add Player
@@ -43,16 +45,25 @@ public class AIPlayers {
     }
 
     public void aiPlay(DealerDeck dd) {
-        for (int i = 1; i < players.size(); i++) {
-            Person p = players.get(i);
-            while (p.getPoints() < hitOn) {
-                p.hit(dd);
-            }
-            if (p.isBust(p.getPoints())) {
-                p.printBust(p.getName());
+        String action;
+        Person dealer = players.get(dealerIndex);
+
+        for (int i = 1; i < players.size() - 1; i++) {
+            boolean playing = true;
+            while (playing) {
+                action = ai.aiDecision(players.get(i), dealer);
+                playing = gv.playAction(action, players.get(i), dd);
             }
         }
+        Person p = players.get(dealerIndex);
+        while (p.getPoints() < hitOn) {
+            p.hit(dd);
+        }
+        if (p.isBust(p.getPoints())) {
+            p.printBust(p.getName());
+        }
     }
+
 
     public void results(){
         int dealerPts;

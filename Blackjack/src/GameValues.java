@@ -31,25 +31,30 @@ public class GameValues {
                 }
                 choice = ch;
             }
-            switch (choice) {
-                case "h":
-                    p.hit(dd);
-                    break;
-                case "s":
-                    p.stay();
-                    playing = false;
-                    break;
-                case "d":
-                    p.doubleDown();
-                    p.hit(dd);
-                    playing = false;
-            }
-
+            playing = playAction(choice, p, dd);
 //            Now test for a bust
             if (p.isBust(0)) {
                 playing = false;
             }
         }
+    }
+
+    public boolean playAction(String choice, Person p, DealerDeck dd ) {
+        switch (choice) {
+            case "h":
+                p.hit(dd);
+                return true;
+
+            case "s":
+                p.stay();
+                return false;
+
+            case "d":
+                p.doubleDown();
+                p.hit(dd);
+                return false;
+        }
+        return false;
     }
 
 

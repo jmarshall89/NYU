@@ -151,5 +151,14 @@ public abstract class Person {
         System.out.println(name + " loses!");
     }
 
+    public boolean hasAce() {
+        for (Card c: hand) {
+            if (c.isAce()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 }
