@@ -51,7 +51,7 @@ public class Card {
                 put("2", 2);
                 put("3", 3);
                 put("4", 4);
-                put("5 ",5);
+                put("5",5);
                 put("6", 6);
                 put("7", 7);
                 put("8", 8);
@@ -67,8 +67,13 @@ public class Card {
 
     public int getPoints(){
 
-        int points;
-        points = pointKey.get(val);
+        int points = 0;
+        try {
+            points = pointKey.get(val);
+            return points;
+        } catch (Exception e) {
+            System.out.println("\n\nError Points: " + val + "   card:" + toString());
+        }
         return points;
     }
 

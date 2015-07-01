@@ -33,7 +33,12 @@ public class Player extends Person {
     }
 
     public boolean isBust(int dealerPts){
-        return (getPoints() > 21);
+        boolean result = (getPoints() > 21);
+        if (result) {
+            System.out.println(getName() + " busts with " + getPoints() + " points.");
+            return true;
+        }
+        return false;
     }
 
     public boolean isBust(){

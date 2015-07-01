@@ -81,10 +81,11 @@ public class AILogic {
         hitOrStay = lookupUsed.get(dealerShowPoints);
 
         int resultIndex = 0;
+        outerloop:
         for (Integer[] intArray : hitOrStay) {
             for (Integer i: intArray) {
                 if (i.equals(playerPoints)) {
-                    break;
+                    break outerloop;
                 }
             }
             resultIndex++;
