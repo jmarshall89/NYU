@@ -26,7 +26,7 @@ public class Player extends Person {
         String stayString;
         String nl = "\n";
 
-        stayString = "Player " + getName() + " stays." + nl + "Points: " + getPoints()
+        stayString = getName() + " stays." + nl + "Points: " + getPoints()
                      + nl + "Cards showing: " + getHand().toString() + nl;
 
         System.out.println(stayString);
