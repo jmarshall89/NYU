@@ -42,9 +42,11 @@ public class AIPlayers {
             }
         }
 
+        gv.showTitle();
         for (Person p: players) {
             p.initialShowing();
         }
+        gv.printLineDown();
     }
 
     public void aiPlay(DealerDeck dd) {

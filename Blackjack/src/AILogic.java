@@ -20,10 +20,10 @@ public class AILogic {
         Integer[] dealer456Stay = {12,13,14,15,16,17,18,19,20,21};
         Integer[] dealer7PlusHit = {2,3,4,5,6,7,8,9,10,11,12,13,14,15,16};
         Integer[] dealer7PlusStay = {17,18,19,20,21};
-        Integer[] softDealer278Hit = {13,14,15,16,17};
-        Integer[] softDealer278Stay = {18,19,20};
-        Integer[] softDealer3456PlusHit = {13,14,15,16,17,18};
-        Integer[] softDealer456PlusStay = {19,20};
+        Integer[] softDealer278Hit = {2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17};
+        Integer[] softDealer278Stay = {18,19,20,21};
+        Integer[] softDealer3456PlusHit = {2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18};
+        Integer[] softDealer456PlusStay = {19,20,21};
 
 //        Now put in a double array with hit first
         Integer[][] dealer23 = {dealer23Hit, dealer23Stay};

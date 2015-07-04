@@ -4,16 +4,36 @@
  */
 public class GameValues {
 
+    private static String nl = "\n";
+    private static String line = "-----------------------------------";
 
     public void getIntro() {
 
         String intro;
-        String nl = "\n";
 
-        intro = "Hello!" + nl + "Welcome to Blackjack!" + nl + nl +
-                "Blackjack pays 3 to 2." + nl + "No bet lost on push." + nl + nl;
+        intro = "Hello!" + nl + "Welcome to Blackjack!" + nl  + nl +
+                "Blackjack pays 3 to 2." + nl + "No bet lost on push." + nl + nl + line + nl;
 
         System.out.print(intro);
+    }
+
+    public void printLineUp() {
+        System.out.println(nl + line );
+    }
+
+    public void printLineDown() {
+        System.out.println(line + nl);
+    }
+
+    public void printLineNone() {
+        System.out.println(line);
+    }
+
+    public void showTitle(){
+        String title;
+        title = nl + "Players Showing:" + nl + nl + line;
+        System.out.println(title);
+
     }
 
     public void playerPlay(Person p, PlayerInputs inputs, DealerDeck dd){
