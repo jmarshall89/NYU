@@ -35,6 +35,9 @@ public class AIPlayers {
     public void initialDeal(DealerDeck dd) {
         for (int i = 0; i < 2; i++){
             for (Person p: players){
+                if (p.getName().equals("Josh")){ // todo delete for debugging
+                    continue;
+                }
                 p.addCard(dd.draw());
             }
         }

@@ -68,7 +68,7 @@ public class Player extends Person {
 
     public boolean isBlackjack() {
         if (getPoints() == 21) {
-            System.out.println("Blackjack! Player wins 3 to 2!");
+            System.out.println(this.getName() + " -- Blackjack! Player wins 3 to 2!\n");
             winBlackjack();
             return true;
         }

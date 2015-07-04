@@ -106,6 +106,9 @@ public abstract class Person {
         while (aceCount > 0) {
             if (score > 21) {
                 score = score - 10;
+                aceCount--;
+            } else {
+                aceCount = 0;
             }
         }
         points = score;
