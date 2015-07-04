@@ -42,13 +42,6 @@ public class Game {
 //            Set player bet
 //            players.get(0).setBet(gameI.setBet(players.get(0)));
             players.get(0).setBet(10); // todo delete for debugging
-               //todo delete all this for debugging...
-                // todo needed to force a blackjack
-                Card c = new Card("Hearts", "10");
-                Card d = new Card("Hearts", "Ace");
-                players.get(0).addCard(c);
-                players.get(0).addCard(d);
-
             ai.initialDeal(dd);
             game.playerPlay(players.get(0),gameI, dd);
             ai.aiPlay(dd);
