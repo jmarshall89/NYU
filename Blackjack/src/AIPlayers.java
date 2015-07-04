@@ -56,6 +56,10 @@ public class AIPlayers {
         for (int i = 1; i < players.size() - 1; i++) {
             boolean playing = true;
             while (playing) {
+                if (players.get(i).isBust()){
+                    playing = false;
+                    continue;
+                }
                 action = ai.aiDecision(players.get(i), dealer);
                 playing = gv.playAction(action, players.get(i), dd);
             }
@@ -64,7 +68,7 @@ public class AIPlayers {
         while (p.getPoints() < hitOn) {
             p.hit(dd);
         }
-        if (p.isBust(p.getPoints())) {
+        if (p.isBust()) {
             p.printBust(p.getName());
         }
     }
@@ -77,7 +81,7 @@ public class AIPlayers {
         for (int i = 0; i < players.size(); i++) {
             Person p = players.get(i);
             System.out.println(p.showHand());
-            if (p.isBust(p.getPoints()) || p.isBlackjack()) {
+            if (p.isBust() || p.isBlackjack()) {
                 continue;
             } else if (p.isPush(dealerPts)) {
                 p.push();

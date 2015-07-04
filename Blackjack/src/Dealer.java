@@ -23,8 +23,8 @@ public class Dealer extends Person {
     }
 
     @Override
-    public boolean isBust(int dealerPts) {
-        if (dealerPts > 21) {
+    public boolean isBust() {
+        if (getPoints() > 21) {
             return true;
         }
         return false;

@@ -53,7 +53,7 @@ public class GameValues {
             }
             playing = playAction(choice, p, dd);
 //            Now test for a bust
-            if (p.isBust(0)) {
+            if (p.isBust()) {
                 playing = false;
             }
         }

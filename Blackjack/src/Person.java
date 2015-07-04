@@ -130,7 +130,7 @@ public abstract class Person {
 
     public abstract void initialShowing();
 
-    public abstract boolean isBust(int dealerPts);
+    public abstract boolean isBust();
 
     public abstract boolean isPush(int dealerPts);
 
