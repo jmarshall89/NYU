@@ -39,7 +39,9 @@ public abstract class Person {
     }
 
     public void winBlackjack() {
-        this.bank = ((bet) * (3/2));
+        double newBet;
+        newBet = ((bet) * 3/2);
+        this.bank += newBet;
     }
 
     public void setName(String name) {
@@ -75,18 +77,9 @@ public abstract class Person {
         this.bet = 0.0d;
     }
 
-    public void winStandard() {
-        System.out.println(name + " wins " + bet);
-        this.bank += this.bet;
-    }
+    public abstract void winStandard();
 
-    public void loseStandard() {
-        System.out.println(name + " loses " + bet);
-        this.bank -= this.bet;
-        if (bank < 0) {
-            this.bank = 0;
-        }
-    }
+    public abstract void loseStandard();
 
     public void newHand() {
         hand.clear();
@@ -114,13 +107,15 @@ public abstract class Person {
         points = score;
     }
 
-    public String showHand() {
+    public void showHand() {
         String show = name + " showing: \n";
         String nl = "\n";
+        int points = getPoints();
         for (Card c: hand) {
             show += c.toString() + nl;
         }
-        return show;
+        show +="Points: " + points + nl + nl;
+        System.out.println(show);
     }
 
 
@@ -140,19 +135,17 @@ public abstract class Person {
 
     public void push() {
         System.out.println("" + name + " pushed with the dealer.");
+//        System.out.println("Points: " + getPoints());
     }
 
     public void printBust(String name) {
         System.out.println(name + " busted!");
+//        System.out.println("Points: " + getPoints());
     }
 
-    public void printWin(String name) {
-        System.out.println(name + " wins!");
-    }
 
-    public void printLose(String name) {
-        System.out.println(name + " loses!");
-    }
+
+    public abstract void printLose(String name);
 
     public boolean hasAce() {
         for (Card c: hand) {
@@ -163,5 +156,7 @@ public abstract class Person {
         return false;
     }
 
+    public abstract void winBlackJackString();
 
+    public abstract void printWin(String name);
 }

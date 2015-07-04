@@ -40,7 +40,7 @@ public class Game {
         while (gameOn) {
 
 //            Set player bet
-//            players.get(0).setBet(gameI.setBet(players.get(0).getName()));
+//            players.get(0).setBet(gameI.setBet(players.get(0)));
             players.get(0).setBet(10); // todo delete for debugging
                //todo delete all this for debugging...
                 // todo needed to force a blackjack
@@ -53,19 +53,13 @@ public class Game {
             game.playerPlay(players.get(0),gameI, dd);
             ai.aiPlay(dd);
             ai.results();
-            gameOn = false;
 
-//            todo: test this
-
-
-
+            if (gameI.continueGame()) {
+                game.resetGame(players);
+                game.resetDealerDeck(players, dd);
+            } else {
+                gameOn = false;
+            }
         }
-
-
-
-
     }
-
-
-
 }

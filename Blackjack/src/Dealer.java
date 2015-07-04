@@ -56,4 +56,14 @@ public class Dealer extends Person {
     public void stay() {
         return;
     }
+
+    @Override
+    public void winBlackJackString() {}
+    public void printWin(String name) {}
+    public void winStandard() {}
+    public void printLose(String name) {}
+    public void loseStandard() {}
+
+
+
 }

@@ -76,13 +76,21 @@ public class AIPlayers {
 
     public void results(){
         int dealerPts;
+        gv.resultsTitle();
         dealerPts = players.get(dealerIndex).getPoints();
+        gv.printDealerPoints(dealerPts);
         players.get(dealerIndex).showHand();
         for (int i = 0; i < players.size(); i++) {
             Person p = players.get(i);
-            System.out.println(p.showHand());
-            if (p.isBust() || p.isBlackjack()) {
+            if (i > 0) {
+                System.out.println("\n-------- \n");
+            }
+            p.showHand();
+            if (p.isBust()) {
                 continue;
+            } else if (p.isBlackjack()) {
+                p.winBlackjack();
+                p.winBlackJackString();
             } else if (p.isPush(dealerPts)) {
                 p.push();
             } else if (p.playerWin(dealerPts)) {

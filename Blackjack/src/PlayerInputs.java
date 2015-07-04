@@ -28,9 +28,20 @@ public class PlayerInputs {
         return sc.nextDouble();
     }
 
-    public double setBet(String name){
-        print(name + ", enter your bet: ");
-        return sc.nextDouble();
+    public double setBet(Person p){
+        double bet = 0;
+        boolean invalid = true;
+        while (invalid){
+            print(p.getName() + ", enter your bet: ");
+            bet = sc.nextDouble();
+            if (bet < p.getBank()) {
+                System.out.println("Error, bet exceeds available funds. Try again.");
+            } else {
+                invalid = false;
+            }
+        }
+        return bet;
+
     }
 
     public String setAction(){

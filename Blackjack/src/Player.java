@@ -36,7 +36,7 @@ public class Player extends Person {
         boolean result = (getPoints() > 21);
         if (result) {
             this.printBust(getName());
-            System.out.println(getName() + " busts with " + getPoints() + " points.");
+            System.out.println(getName() + " busts with " + getPoints() + " points.\n");
             return true;
         }
         return false;
@@ -59,9 +59,10 @@ public class Player extends Person {
     }
 
     public boolean isBlackjack() {
-        if (getPoints() == 21) {
+        int count;
+        count = getHand().size();
+        if (getPoints() == 21 && count == 2) {
             System.out.println(this.getName() + " -- Blackjack! Player wins 3 to 2!\n");
-            winBlackjack();
             return true;
         }
         return false;
@@ -69,7 +70,39 @@ public class Player extends Person {
 
     public void initialShowing(){
 //        System.out.println("" + getName() + " showing: ");
-        System.out.println(showHand());
+        showHand();
     }
+
+    @Override
+    public void winBlackJackString() {
+        double newBet = getBet();
+        newBet = newBet * 3;
+        newBet = newBet / 2;
+        System.out.println(getName() + " Wins $" + newBet);
+        System.out.println("Bank increased to: $" + getBank());
+    }
+    public void printWin(String name) {
+        System.out.println(name + " wins!");
+//        System.out.println("Points: " + getPoints());
+    }
+
+    public void winStandard() {
+        System.out.println(getName() + " wins S" + getBet());
+        setBank(getBank() + getBet());
+    }
+
+    public void printLose(String name) {
+        System.out.println(name + " loses!");
+    }
+
+    public void loseStandard() {
+        System.out.println(getName() + " loses S" + getBet());
+        setBank(getBank() - getBet());
+        if (getBank() < 0) {
+            setBank(0);
+            System.out.println("Bank Empty");
+        }
+    }
+
 
 }
