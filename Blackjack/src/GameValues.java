@@ -112,6 +112,7 @@ public class GameValues {
             p.resetBet();
             p.newHand();
         }
+        newGameSpaces();
     }
 
     public void resetDealerDeck(List<Person> players, DealerDeck dd) {
@@ -125,6 +126,12 @@ public class GameValues {
             dd.createDeck();
         }
 
+    }
+
+    public void newGameSpaces() {
+        String spaces;
+        spaces = nl + nl + nl + nl + nl + nl + nl + nl;
+        System.out.println(spaces);
     }
 
 

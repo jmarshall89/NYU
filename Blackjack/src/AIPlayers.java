@@ -107,6 +107,7 @@ public class AIPlayers {
         for (Person p: players) {
             p.resetBet();
             p.newHand();
+
         }
     }
 
