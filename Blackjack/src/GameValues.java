@@ -71,7 +71,7 @@ public class GameValues {
             boolean error = true;
             while (error) {
                 String ch;
-                ch = inputs.setAction();
+                ch = inputs.setAction(p.getPoints());
                 if (ch.equals("d") && count > 2) {
                     doubleDownError();
                     error = false;

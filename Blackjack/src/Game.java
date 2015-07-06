@@ -47,7 +47,7 @@ public class Game {
             ai.aiPlay(dd);
             ai.results();
 
-            if (gameI.continueGame()) {
+            if (gameI.continueGame(players.get(0))) {
                 game.resetGame(players);
                 game.resetDealerDeck(players, dd);
             } else {

@@ -25,6 +25,7 @@ public class Dealer extends Person {
     @Override
     public boolean isBust() {
         if (getPoints() > 21) {
+            System.out.println("Dealer Bust!");
             return true;
         }
         return false;

@@ -75,6 +75,9 @@ public class AIPlayers {
         int dealerPts;
         gv.resultsTitle();
         dealerPts = players.get(dealerIndex).getPoints();
+        if (players.get(dealerIndex).isBust()) {
+            dealerPts = 0;
+        }
         gv.printDealerPoints(dealerPts);
         players.get(dealerIndex).showHand();
         for (int i = 0; i < players.size(); i++) {

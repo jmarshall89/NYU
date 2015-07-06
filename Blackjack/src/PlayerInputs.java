@@ -44,8 +44,8 @@ public class PlayerInputs {
 
     }
 
-    public String setAction(){
-        print("Choose your action \n (h)it, (s)tay, (d)ouble down: ");
+    public String setAction(int p){
+        print("Choose your action (points: " + p + "): \n (h)it, (s)tay, (d)ouble down: ");
         String action = sc.next();
         action = action.toLowerCase();
 
@@ -60,9 +60,10 @@ public class PlayerInputs {
         return "error";
     }
 
-    public boolean continueGame(){
-        print("Play again? ");
-        String ans = sc.next();
+    public boolean continueGame(Person p){
+        double bank = p.getBank();
+        print("Play again? (Bank: $" + bank + "): ");
+        String ans = sc.next().toLowerCase();
         if (ans.equals("y") || ans.equals("yes")){
             return true;
         }
