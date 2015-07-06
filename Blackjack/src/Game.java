@@ -32,6 +32,7 @@ public class Game {
         AIPlayers ai = new AIPlayers(numPlayers, name);
         players = ai.getPlayers();
 
+
 //        Finally the player can set their bankroll
 //        players.get(0).setBank(gameI.setBank());
         players.get(0).setBank(100); // todo delete for debugging

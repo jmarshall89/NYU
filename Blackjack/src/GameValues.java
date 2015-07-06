@@ -74,9 +74,9 @@ public class GameValues {
                 ch = inputs.setAction(p.getPoints());
                 if (ch.equals("d") && count > 2) {
                     doubleDownError();
-                    error = false;
-                } else if (!ch.equals("error")){
+                } else if (ch.equals("error")){
                     error();
+                } else {
                     error = false;
                 }
                 choice = ch;

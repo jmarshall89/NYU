@@ -46,8 +46,7 @@ public class PlayerInputs {
 
     public String setAction(int p){
         print("Choose your action (points: " + p + "): \n (h)it, (s)tay, (d)ouble down: ");
-        String action = sc.next();
-        action = action.toLowerCase();
+        String action = sc.next().toLowerCase();
 
         if (action.equals("h") || action.equals("hit")) {
             return "h";
