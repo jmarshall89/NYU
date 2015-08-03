@@ -5,14 +5,14 @@ import java.util.List;
  * Created by jmarshall on 6/21/15.
  */
 public class AIPlayers {
-    private List<Person> players = new ArrayList<Person>();
-    private int playerNum = 2;
     private static int dealerIndex = 0;
-    private int hitOn = 16;
     AILogic ai = new AILogic();
     GameValues gv = new GameValues();
+    private List<Person> players = new ArrayList<Person>();
+    private int playerNum = 2;
+    private int hitOn = 16;
 
-    public AIPlayers(int numPlayers, String p1Name){
+    public AIPlayers(int numPlayers, String p1Name) {
 //        Add Player
         players.add(new Player(p1Name));
         dealerIndex++;
@@ -33,14 +33,14 @@ public class AIPlayers {
     }
 
     public void initialDeal(DealerDeck dd) {
-        for (int i = 0; i < 2; i++){
-            for (Person p: players){
+        for (int i = 0; i < 2; i++) {
+            for (Person p : players) {
                 p.addCard(dd.draw());
             }
         }
 
         gv.showTitle();
-        for (Person p: players) {
+        for (Person p : players) {
             p.initialShowing();
         }
         gv.printLineDown();
@@ -53,7 +53,7 @@ public class AIPlayers {
         for (int i = 1; i < players.size() - 1; i++) {
             boolean playing = true;
             while (playing) {
-                if (players.get(i).isBust()){
+                if (players.get(i).isBust()) {
                     playing = false;
                     continue;
                 }
@@ -71,7 +71,7 @@ public class AIPlayers {
     }
 
 
-    public void results(){
+    public void results() {
         int dealerPts;
         gv.resultsTitle();
         dealerPts = players.get(dealerIndex).getPoints();
@@ -104,13 +104,12 @@ public class AIPlayers {
     }
 
     public void resetGame() {
-        for (Person p: players) {
+        for (Person p : players) {
             p.resetBet();
             p.newHand();
 
         }
     }
-
 
 
 }
