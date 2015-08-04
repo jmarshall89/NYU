@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="01c2f7c9-263b-45e8-a03e-90730813610f" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../NYUJavaClass/IO with Database/src/Controller.java" afterPath="$PROJECT_DIR$/../NYUJavaClass/IO with Database/src/Controller.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../NYUJavaClass/IO with Database/src/Model.java" afterPath="$PROJECT_DIR$/../NYUJavaClass/IO with Database/src/Model.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../NYUJavaClass/IO with Database/src/StudentInfo.java" afterPath="$PROJECT_DIR$/../NYUJavaClass/IO with Database/src/StudentInfo.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../NYUJavaClass/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../NYUJavaClass/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../NYUJavaClass/IO with Database/src/View.java" afterPath="$PROJECT_DIR$/../NYUJavaClass/IO with Database/src/View.java" />
     </list>
     <ignored path="MockitExample.iws" />
     <ignored path=".idea/workspace.xml" />

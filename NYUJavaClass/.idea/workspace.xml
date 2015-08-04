@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="47d2a176-2a11-476b-ae5c-5160b54e3a05" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/IO with Database/src/Controller.java" afterPath="$PROJECT_DIR$/IO with Database/src/Controller.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/IO with Database/src/Model.java" afterPath="$PROJECT_DIR$/IO with Database/src/Model.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/NYUJavaClass.iml" afterPath="$PROJECT_DIR$/NYUJavaClass.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/IO with Database/src/StudentInfo.java" afterPath="$PROJECT_DIR$/IO with Database/src/StudentInfo.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../MockitExample/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../MockitExample/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/IO with Database/src/View.java" afterPath="$PROJECT_DIR$/IO with Database/src/View.java" />
     </list>
     <ignored path="NYUJavaClass.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -31,14 +25,24 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Controller.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Controller.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/IO with Database/src/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8222591">
-              <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="14" column="37" selection-start-line="14" selection-start-column="37" selection-end-line="14" selection-end-column="37" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MainDBParser.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/IO with Database/src/MainDBParser.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.22425249">
+              <caret line="9" column="8" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="8" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -92,7 +96,7 @@
         <entry file="file://$PROJECT_DIR$/IO with Database/src/View.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+              <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -131,6 +135,8 @@
         <option value="$PROJECT_DIR$/IO with Database/src/StudentInfo.java" />
         <option value="$PROJECT_DIR$/IO with Database/src/Model.java" />
         <option value="$PROJECT_DIR$/IO with Database/src/Controller.java" />
+        <option value="$PROJECT_DIR$/IO with Database/src/View.java" />
+        <option value="$PROJECT_DIR$/IO with Database/src/MainDBParser.java" />
       </list>
     </option>
   </component>
@@ -544,12 +550,12 @@
       <workItem from="1436558113053" duration="208000" />
       <workItem from="1438113598787" duration="347000" />
       <workItem from="1438618697723" duration="795000" />
-      <workItem from="1438716129214" duration="3705000" />
+      <workItem from="1438716129214" duration="5170000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="22740000" />
+    <option name="totallyTimeSpent" value="24205000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="746" extended-state="0" />
@@ -608,13 +614,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/CollegeStudent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/IO with Database/IO with Database.iml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -957,6 +956,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/IO with Database/src/Model.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#811#812#0" expanded="true" />
+            <element signature="e#857#858#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/IO with Database/src/StudentInfo.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -986,33 +997,29 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/IO with Database/src/Controller.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="14" column="37" selection-start-line="14" selection-start-column="37" selection-end-line="14" selection-end-column="37" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/IO with Database/src/View.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/IO with Database/src/Model.java">
+    <entry file="file://$PROJECT_DIR$/IO with Database/src/MainDBParser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#811#812#0" expanded="true" />
-            <element signature="e#857#858#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/IO with Database/src/Controller.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8222591">
-          <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.22425249">
+          <caret line="9" column="8" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="8" />
+          <folding />
         </state>
       </provider>
     </entry>
