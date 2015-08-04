@@ -2,7 +2,7 @@
  * Created by jmarshall on 8/4/15.
  */
 public class StudentInfo {
-    
+
     private int id;
     private String lname;
     private String fname;
