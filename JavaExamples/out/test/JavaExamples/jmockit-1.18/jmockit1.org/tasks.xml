@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2006-2015 Rogério Liesenfeld
+  ~ This file is subject to the terms of the MIT license (see LICENSE.txt).
+  -->
+<project name="jmockit" basedir=".">
+   <taskdef resource="testngtasks" classpath="lib/testng-6.8.jar"/>
+   <taskdef
+      name="jacocoReport" classname="org.jacoco.ant.ReportTask"
+      classpath="../../Java/jacoco-0.7.3/lib/jacocoant.jar"/>
+
+   <loadfile property="version" srcFile="version.txt"/>
+
+   <path id="common.classpath">
+      <fileset dir="lib" includes="*.jar"/>
+   </path>
+
+   <target name="createJavadocs">
+      <property name="api" value="../jmockit.github.io/api1x"/>
+      <delete dir="${api}" includes="**/*.html" excludes="overview.html" quiet="true"/>
+      <delete dir="${api}/resources" includes="*.gif" quiet="true"/>
+      <delete file="${api}/stylesheet.css"/>
+      <javadoc
+         destdir="${api}" overview="${api}/overview.html"
+         classpathref="common.classpath" classpath="main/classes"
+         nodeprecated="false" noindex="true" notree="true" nohelp="true" breakiterator="yes"
+         windowtitle="JMockit Toolkit API"
+         encoding="UTF-8" charset="UTF-8" locale="en">
+         <arg line="-notimestamp -quiet -Xdoclint:none"/>
+         <fileset dir="${basedir}/main/src">
+            <include name="mockit/*.java"/>
+            <include name="mockit/integration/junit4/*.java"/>
+         </fileset>
+         <link href="http://docs.oracle.com/javase/8/docs/api/" offline="true" packagelistloc="${api}/external"/>
+         <doctitle><![CDATA[
+            <a href="http://jmockit.org" target="_top"><img src="resources/logo.png" style="vertical-align:middle">
+               JMockit</a>
+            - API Documentation
+         ]]></doctitle>
+         <header><![CDATA[
+            <a href="http://jmockit.org" target="_top">
+               <img src="resources/logo.png" style="padding:4px;vertical-align:middle">JMockit Home</a>
+         ]]></header>
+         <footer><![CDATA[
+            <a href="http://jmockit.org" target="_top">
+               <img src="resources/logo.png" style="padding:4px;vertical-align:middle">JMockit Home</a>
+         ]]></footer>
+      </javadoc>
+      <delete file="${api}/constant-values.html"/>
+      <replace dir="${api}/mockit" includes="*.html" token="resources/logo.png" value="../resources/logo.png"/>
+      <replace
+         dir="${api}/mockit/integration/junit4" includes="*.html"
+         token="resources/logo.png" value="../../../resources/logo.png"/>
+      <replace dir="${api}" includes="*.html">
+         <replacetoken><![CDATA[</head>]]></replacetoken>
+         <replacevalue><![CDATA[<link rel="shortcut icon" type="image/x-icon" href="resources/favicon.ico">
+</head>]]></replacevalue>
+      </replace>
+      <replace dir="${api}/mockit" includes="*.html">
+         <replacetoken><![CDATA[</head>]]></replacetoken>
+         <replacevalue><![CDATA[<link rel="shortcut icon" type="image/x-icon" href="../resources/favicon.ico">
+</head>]]></replacevalue>
+      </replace>
+      <replace dir="${api}/mockit/integration" includes="*/*.html">
+         <replacetoken><![CDATA[</head>]]></replacetoken>
+         <replacevalue><![CDATA[<link rel="shortcut icon" type="image/x-icon" href="../../../resources/favicon.ico">
+</head>]]></replacevalue>
+      </replace>
+   </target>
+
+   <target name="createJars" depends="createJar-main, createJar-coverage"/>
+   <target name="createJar-main">
+      <delete file="jmockit.jar"/>
+      <jar destfile="jmockit.jar">
+         <fileset file="LICENSE.txt"/>
+         <fileset file="NOTICE.txt"/>
+         <fileset dir="main/src" includes="mockit/**/*.java **/attach/**/*.java org/junit/**/*.java"/>
+         <fileset dir="main/classes" includes="mockit/**/*.class **/attach/**/*.class org/junit/**/*.class"/>
+         <manifest>
+            <attribute name="Premain-Class" value="mockit.internal.startup.Startup"/>
+            <attribute name="Agent-Class" value="mockit.internal.startup.Startup"/>
+            <attribute name="Can-Redefine-Classes" value="true"/>
+            <attribute name="Can-Retransform-Classes" value="true"/>
+            <attribute name="Implementation-Version" value="${version}"/>
+         </manifest>
+         <service
+            type="org.testng.ITestNGListener" provider="mockit.integration.testng.internal.TestNGRunnerDecorator"/>
+      </jar>
+   </target>
+   <target name="createJar-coverage">
+      <delete file="jmockit-coverage.jar"/>
+      <jar destfile="jmockit-coverage.jar">
+         <fileset file="LICENSE.txt"/>
+         <fileset file="NOTICE.txt"/>
+         <fileset dir="coverage/src" includes="mockit/coverage/**/*.java"/>
+         <fileset
+            dir="coverage/classes" includes="jmockit.properties mockit/coverage/**/*.class **/*.css **/*.js **/*.png"/>
+         <fileset dir="main/classes">
+            <include name="mockit/external/asm/*.class"/>
+            <include name="mockit/internal/util/ClassLoad.class"/>
+            <include name="mockit/internal/util/StackTrace.class"/>
+            <include name="mockit/internal/state/TestRun.class"/>
+            <include name="mockit/internal/state/MockFixture.class"/>
+            <include name="mockit/internal/startup/Startup.class"/>
+            <include name="com/sun/tools/attach/**/*.class"/>
+            <include name="sun/tools/attach/*.class"/>
+         </fileset>
+         <manifest>
+            <attribute name="Main-Class" value="mockit.coverage.CodeCoverage"/>
+            <attribute name="Premain-Class" value="mockit.coverage.standalone.Startup"/>
+            <attribute name="Agent-Class" value="mockit.coverage.standalone.Startup"/>
+            <attribute name="Can-Redefine-Classes" value="true"/>
+            <attribute name="Can-Retransform-Classes" value="true"/>
+            <attribute name="Implementation-Version" value="${version}"/>
+         </manifest>
+      </jar>
+   </target>
+
+   <target name="createZip">
+      <zip
+         destfile="../artifacts1x/jmockit-${version}.zip"
+         basedir=".." includes="jmockit1.org/**, jmockit.github.io/**"
+         excludes="jmockit1.org/**/*.i*, jmockit.github.io/*.i*,
+                   jmockit1.org/*.zip, jmockit1.org/**/*.ser, jmockit1.org/**/lib/**, jmockit1.org/build.xml,
+                   jmockit1.org/**/target/**, jmockit1.org/**/classes/**, jmockit1.org/**/test-classes/**,
+                   jmockit1.org/**/test-output/**, jmockit1.org/samples/javax.inject-tck/**,
+                   jmockit1.org/**/coverage-report/**, jmockit1.org/**/jacoco.exec, jmockit1.org/**/*.html"
+         encoding="UTF-8"/>
+   </target>
+
+   <macrodef name="testReport">
+      <attribute name="name"/>
+      <sequential>
+         <junitreport>
+           <fileset dir="." includes="TEST-*.xml"/>
+           <report format="noframes" styledir="${ant.home}/etc"/>
+         </junitreport>
+         <delete dir="." includes="TEST*-*.xml" quiet="true"/>
+         <move file="junit-noframes.html" tofile="@{name}.html"/>
+      </sequential>
+   </macrodef>
+
+   <target name="tests">
+      <junit fork="yes" forkmode="once" dir="main" showoutput="true" printsummary="true">
+         <assertions><enable/></assertions>
+         <jvmarg value="-javaagent:../jmockit.jar"/>
+         <classpath refid="common.classpath"/>
+         <classpath location="main/test-classes"/>
+         <classpath location="main/classes"/>
+         <batchtest>
+            <fileset dir="main/test-classes">
+               <include name="**/*Test.class"/>
+               <exclude name="**/*CodeUnderTest.class"/>
+               <exclude name="**/Base*Test.class"/>
+               <exclude name="mockit/integration/testng/*Test.class"/>
+               <exclude name="**/MockStateBetweenTestMethodsNGTest.class"/>
+               <exclude name="**/ExecutingTest.class"/>
+            </fileset>
+         </batchtest>
+         <formatter type="xml"/>
+      </junit>
+      <testReport name="main/JMockitTests"/>
+
+      <testng workingdir="main">
+         <classpath refid="common.classpath"/>
+         <classpath path="jmockit.jar"/>
+         <classpath>
+            <pathelement location="main/test-classes"/>
+         </classpath>
+         <classfileset
+            dir="main/test-classes"
+            includes="mockit/integration/testng/*Test.class"
+            excludes="mockit/integration/testng/BaseTestNGDecoratorTest.class
+                      mockit/integration/testng/TestNGViolatedExpectationsTest.class"/>
+      </testng>
+   </target>
+
+   <target name="coverageTests">
+      <junit fork="yes" forkmode="once" dir="coverageTests" showoutput="true" printsummary="true">
+         <classpath path="jmockit.jar"/>
+         <classpath path="jmockit-coverage.jar"/>
+         <classpath refid="common.classpath"/>
+         <classpath location="coverageTests/test-classes"/>
+         <classpath location="coverageTests/classes"/>
+         <sysproperty key="coverage-metrics" value="all"/>
+         <batchtest>
+            <fileset dir="coverageTests/test-classes" includes="**/*Test.class" excludes="**/CoverageTest.class"/>
+         </batchtest>
+         <formatter type="xml"/>
+      </junit>
+      <testReport name="coverageTests/CoverageTests"/>
+   </target>
+
+   <target name="sampleTests">
+      <junit fork="yes" forkmode="once" dir="samples" showoutput="true" printsummary="true">
+         <assertions><enable/></assertions>
+         <classpath path="jmockit.jar"/>
+         <classpath path="jmockit-coverage.jar"/>
+         <sysproperty key="coverage-output" value="serial"/>
+         <classpath refid="common.classpath"/>
+         <classpath>
+            <fileset dir="samples" includes="**/lib/*.jar"/>
+            <dirset dir="samples">
+               <include name="*/classes"/>
+               <include name="*/test-classes"/>
+            </dirset>
+         </classpath>
+         <batchtest>
+            <fileset dir="samples/easymock/test-classes" includes="**/*Test.class"/>
+            <fileset dir="samples/jmock/test-classes" includes="**/*Test.class"/>
+            <fileset dir="samples/mockito/test-classes" includes="**/*Test.class"/>
+            <fileset dir="samples/unitils/test-classes" includes="**/*Test.class"/>
+            <fileset dir="samples/powermock/test-classes" includes="**/*Test.class"/>
+            <fileset dir="samples/orderMngmntWebapp/test-classes" includes="**/*Test.class"/>
+            <fileset dir="samples/tutorial/test-classes" includes="**/*Test.class"/>
+            <fileset dir="samples/TimingFramework/test-classes" includes="**/*Test.class" excludes="end2end/*"/>
+            <fileset dir="samples/AnimatedTransitions/test-classes" includes="**/*Test.class"/>
+            <fileset dir="samples/tourdemock/test-classes" includes="**/*Test.class"/>
+         </batchtest>
+         <formatter type="xml"/>
+      </junit>
+      <testReport name="samples/JMockitSampleTests"/>
+
+      <property name="sampleDir" value="samples/LoginService"/>
+      <testng workingdir="${sampleDir}">
+         <classpath refid="common.classpath"/>
+         <classpath path="jmockit.jar"/>
+         <classpath path="jmockit-coverage.jar"/>
+         <sysproperty key="coverage-output" value="serial"/>
+         <classpath>
+            <fileset dir="samples" includes="lib/*.jar"/>
+            <pathelement location="${sampleDir}/classes"/>
+            <pathelement location="${sampleDir}/test-classes"/>
+         </classpath>
+         <classfileset dir="${sampleDir}/test-classes" includes="**/*Test.class"/>
+      </testng>
+
+      <java fork="yes" dir="samples" jar="jmockit-coverage.jar">
+         <jvmarg line="-Djmockit-coverage-output=html"/>
+         <arg line=". LoginService"/>
+      </java>
+      <delete file="samples/coverage.ser"/>
+      <delete file="samples/LoginService/coverage.ser"/>
+   </target>
+
+   <target name="jacoco-report">
+      <property name="moduleDir" value="samples/mockito"/>
+      <jacocoReport>
+         <executiondata>
+            <file file="${moduleDir}/jacoco.exec"/>
+         </executiondata>
+         <structure name="JaCoCo Ant Example">
+            <classfiles>
+               <fileset dir="${moduleDir}/classes"/>
+            </classfiles>
+            <sourcefiles encoding="UTF-8">
+               <fileset dir="${moduleDir}/src"/>
+            </sourcefiles>
+         </structure>
+         <html destdir="${moduleDir}/jacoco-report"/>
+      </jacocoReport>
+      <delete file="${moduleDir}/jacoco.exec"/>
+   </target>
+</project>

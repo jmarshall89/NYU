@@ -1,0 +1,8 @@
+set name=fmri value=pkg:/sdk-branding-full@4.1,0-13:20140829T215248Z
+set name=info.classification value="Application Servers"
+set name=pkg.description value="Java EE 7 SDK Extension Files."
+set name=pkg.summary value="Java EE 7 SDK Extensions"
+depend fmri=pkg:/glassfish-nucleus type=require
+file 58576675786d62fd6fbd176b6966eb6a4ba8d8f1 chash=b7dd1a2a8c0df04318e5dac69ec771d17231f38c group=sys mode=0664 owner=root path=index.html pkg.csize=2930 pkg.size=8177
+license 295d95dbca362b6392155e01a4be7607e9b72110 chash=f7a5f98d6fd365e9d81d66f03b4f7812eba82838 license="OTN License" pkg.csize=4072 pkg.size=10710
+set name=publisher value=release.javaeesdk.oracle.com

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<!--
+  ~ Copyright (c) 2006-2014 Rogério Liesenfeld
+  ~ This file is subject to the terms of the MIT license (see LICENSE.txt).
+  -->
+<html>
+<head>
+   <title>JMockit - About The JMockit Testing Toolkit</title>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+   <meta name="description"
+         content="Motivations for the creation of JMockit and goals for its continued development.">
+   <link rel="stylesheet" type="text/css" href="prettify.css"/>
+   <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
+</head>
+<body>
+<h1 class="header">
+   <a href="index.html">JMockit</a>
+   <span>The Mock <span>Anything</span> Toolkit for Java</span>
+</h1>
+<table class="navBar"><tr>
+   <th><a href="gettingStarted.html">Getting&nbsp;started</a></th>
+   <th><a href="about.html">About</a></th>
+   <th><a href="tutorial.html">Tutorial</a></th>
+   <th><a href="samples.html">Samples</a></th>
+   <th><a href="api1x/index.html">API</a></th>
+   <th><a href="http://github.com/jmockit/jmockit1">Source</a></th>
+   <th><a href="http://github.com/jmockit/jmockit1/issues">Issues</a></th>
+   <th><a href="community.html">Community</a></th>
+   <th><a href="changes.html">History</a></th>
+</tr></table>
+
+<h1>
+   <a href="#">About the JMockit Testing Toolkit</a>
+</h1>
+<p>
+   JMockit is open source software licensed under the
+   <a href="http://www.opensource.org/licenses/mit-license.php">MIT License</a>.
+   It includes mocking APIs and other tools for use in <em>developer testing</em>, that is, tests written by developers
+   using a testing framework such as <a href="http://junit.org">JUnit</a> or <a href="http://testng.org">TestNG</a>.
+</p>
+<p>
+   The toolkit was created mainly as an attempt to overcome certain limitations found in "conventional"
+   <a href="http://www.martinfowler.com/articles/mocksArentStubs.html">mocking</a> tools, which prevented the creation
+   of unit tests for code designed according to well-established OO practices.
+   Another goal was to provide simpler and more succinct APIs for writing developer tests.
+   In addition, and differently from other testing tools which specifically target the use of mocks, JMockit also
+   includes other tools designed to support the creation of large test suites.
+</p>
+
+<h2 id="internalWorkings">
+   <a href="#internalWorkings">How it works</a>
+</h2>
+<p>
+   Internally, the Java SE 6 bytecode instrumentation feature (the
+   <a href="http://download.oracle.com/javase/6/docs/api/java/lang/instrument/package-summary.html"
+      >java.lang.instrument</a> package) is used extensively.
+   For the reading and in-memory generation of modified bytecode arrays, the <a href="http://asm.objectweb.org">ASM</a>
+   library is used.
+</p>
+<p>
+   Mocking features mostly use the JVM's ability to <em>redefine</em> classes that have already been loaded, as exposed
+   through the <code>java.lang.instrument.Instrumentation#redefineClasses(ClassDefinition...)</code> method.
+   This method uses the same mechanism behind the "hotswap" feature commonly used while debugging Java code, which
+   allows a new version of a class to take the place of its current version in a running JVM.
+</p>
+<p>
+   Whenever a class to be mocked is found in the course of a test run, it has its current bytecode definition
+   temporarily modified, so that the regular behavior of methods and constructors can be replaced with mock behavior, as
+   specified in a test.
+   As soon as the test is completed, the class has its bytecode restored, and its original behavior is resumed.
+   This process repeats itself for the next test, whenever needed as specified in test code through the mocking API.
+</p>
+
+<h2 id="conventionalTools">
+   <a href="#conventionalTools">Conventional tools for mock objects</a>
+</h2>
+<p>
+   The JMockit approach is an alternative to the conventional use of "mock objects" as provided by tools such as
+   <a href="http://easymock.org">EasyMock</a>, <a href="http://jmock.org">jMock</a>, and
+   <a href="http://mockito.org">Mockito</a>.
+</p>
+<p>
+   Such tools are based on the dynamic generation of implementation classes (through
+   <a href="http://download.oracle.com/javase/6/docs/api/java/lang/reflect/Proxy.html">java.lang.reflect.Proxy</a>, when
+   given an interface to be mocked) and subclasses (through <a href="http://cglib.sourceforge.net">CGLIB</a>, when given
+   a non-final class to be mocked).
+   This particular mocking implementation technique, in which a subclass with overriding mock methods is created,
+   carries some penalties: <code>final</code> classes, constructors, and non-overridable methods simply <em>cannot</em>
+   be mocked; even worse, when mocking a non-final class which happens to contain <code>final</code> methods, these
+   tools will silently ignore them, often surprising users.
+   Most importantly, however, these limitations mean that dependencies of code under test (that is, the objects of other
+   classes on which a given class under test depends) must be controlled by the tests, so that mock instances can be
+   passed to the clients of those dependencies;
+   that is, dependencies cannot simply be instantiated with the <code>new</code> operator in the client class.
+</p>
+<p>
+   Ultimately, the technical limitations of conventional mocking tools impose the following design restrictions on
+   production code:
+</p>
+<ol>
+   <li>
+      Each class which may need to be mocked in a test must either implement a separate interface or not be
+      <code>final</code>.
+   </li>
+   <li>
+      The dependencies of each class to be tested must either be obtained through configurable instance creation methods
+      (factories or a <em>Service Locator</em>), or be exposed for
+      <a href="http://martinfowler.com/articles/injection.html">dependency injection</a>.
+      Otherwise, tests won't be able to pass mock implementations of dependencies to code under test.
+   </li>
+   <li>
+      Since only non-final instance methods can be mocked, classes to be unit tested in isolation from their
+      dependencies cannot call any <code>static</code> or <code>final</code> methods on said dependencies, nor
+      directly instantiate them.
+   </li>
+</ol>
+
+<h2 id="productionCode">
+   <a href="#productionCode">Design considerations for production code</a>
+</h2>
+<p>
+   The problem with imposing restrictions on the design of production code is that there <em>are</em> good reasons for
+   making classes and methods <code>final</code>, for directly obtaining instances of collaborators with the
+   <code>new</code> operator, and for using APIs containing <code>static</code> methods.
+   There is nothing inherently wrong with using these three Java language keywords, after all.
+</p>
+
+<h3 id="final">
+   <a href="#final">Use of <code>final</code></a>
+</h3>
+<p>
+   Declaring classes or methods <code>final</code> communicates the design decision that they are not intended for
+   extension by subclassing.
+   For example, in a correct application of the <a href="http://en.wikipedia.org/wiki/Template_method_pattern">Template
+   Method</a> design pattern, the "template" method itself (which implements an algorithm calling one or more
+   overridable methods) must <em>not</em> be overridable.
+   Also, from the point of view of API design, <code>final</code> classes are the only ones which can be safely evolved;
+   otherwise, you risk running into the <em>fragile base-class</em> problem.
+   For more on this, see the following articles:
+   <a href="http://www.javaworld.com/article/2073649/core-java/why-extends-is-evil.html">Why extends is evil</a>,
+   <a href="http://www.gotw.ca/publications/mill18.htm">Virtuality</a>.
+</p>
+<p>
+   In practice, most classes and methods in an application or even in a reusable class library are not designed with
+   extension by subclassing in mind, so it makes sense to declare them as <code>final</code>; probably that's why most
+   other OO languages (C++, C#, etc.) make all methods non-overridable by default.
+</p>
+<p>
+   Another benefit of making Java classes or methods <code>final</code> is that a good static analysis tool will be able
+   to provide more useful feedback.
+   The code inspections associated with the use of <code>final</code> in IntelliJ IDEA, for example, led me numerous
+   times to simplify and even eliminate unused parts of the code base, when developing large business applications.
+   (For the curious, some of the relevant inspections are: "Class structure: 'protected' member in 'final' class",
+   "Declaration redundancy: redundant throws declaration", and "Initialization issues: overridable method call during
+   object construction".)
+</p>
+<p>
+   For an authoritative discussion on design for extension (which defends the judicious use of <code>final</code> for
+   classes and methods), see "Item 17: Design and document for inheritance or else prohibit it" in the
+   <a href="http://www.amazon.com/Effective-Java-2nd-Joshua-Bloch/dp/0321356683">Effective Java</a> book.
+   Another book which strongly recommends the use of <code>final</code> for classes and methods is
+   <a href="http://www.amazon.com/Practical-API-Design-Confessions-Framework/dp/1430209739">Practical API Design</a>
+   (see "Make Everything Final", in chapter 5).
+   Yet another relevant book is <a href="http://www.apibook.com/blog">API Design for C++</a>, which is also largely
+   applicable to Java (see sections "2.3.2 Add Virtual Functions Judiciously" and "4.6.3 Using Inheritance").
+   The site for this last book points to several interesting articles, including
+   <a href="http://www.artima.com/weblogs/viewpost.jsp?thread=142428">Java API Design Guidelines</a>.
+</p>
+<p>
+   Personally, I consider the choice by the Java language designers to make non-private instance methods overridable
+   <em>by default</em> a mistake, one which was probably influenced by a mentality typical until the 1990's that the
+   more you can inherit, the better.
+   Personal experience, however, shows two things that discredit that position: 1) in most cases, Java programmers
+   simply take the easy route and leave all classes and methods as non-final, without consideration for API design
+   questions (just like for languages with the "<code>virtual</code>" keyword, where most methods end up as
+   non-overridable simply because it was the default - the difference here, of course, being that this usually is the
+   right choice); 2) often, when a programmer decides to create a subclass for a non-final Java class, it is done only
+   as a "hack" intended to arbitrarily change the behavior of some method, without any consideration to object-oriented
+   design principles such as the <a href="http://www.objectmentor.com/resources/articles/lsp.pdf">Liskov Substitution
+   Principle</a> (LSP), or the recommendation to "<cite>Favor object composition over class inheritance</cite>"
+   (<a href="http://c2.com/cgi/wiki?DesignPatternsBook">Design Patterns</a>, page 20).
+</p>
+
+<h3 id="new">
+   <a href="#new">Use of <code>new</code></a>
+</h3>
+<p>
+   Directly instantiating dependencies with <code>new</code> facilitates the use of stateful objects.
+   In OO design, objects normally are not stateless.
+   However, when dependencies are obtained or injected through external means (such as a "Service Locator" or a DI
+   framework) there is a tendency to make them stateless, and with a single global instance.
+   Such a practice leads to code that is more procedural and less object oriented.
+   Of course, this criticism applies to dependencies whose interfaces have only one implementation in production code,
+   or when the selection of an implementation between many would not benefit from external configuration (for example,
+   people typically instantiate <code>List</code> implementations directly, even if they code to the abstract
+   interface only); situations where one implementation <em>must</em> be selected through external configuration tend to
+   be quite rare in practice.
+</p>
+<p>
+   Related to this issue, I think, there is a widely observed misunderstanding of just what the phrase "<cite>Program to
+   an interface, not an implementation</cite>" (from the famous "Design Patterns" book, page 18) actually means.
+   Many seem to think that one should <em>create</em> a new separate Java interface (or abstract class) for any concrete
+   class which is being created or doesn't yet implement one.
+   In reality, it was only meant as a recommendation to avoid declaring variables, fields, parameters, or return types
+   as the implementation type <em>when an abstract type already exists</em> (for example, don't declare variables of
+   type <code>ArrayList</code> if all you need is a <code>List</code>).
+   The "Effective Java" book mentioned above also discusses this topic, in "Item 52: Refer to objects by their
+   interfaces".
+</p>
+<p>
+   Another bad motivation to avoid the use of <code>new</code> may simply be an unreasonable fear of getting "too much"
+   garbage collection.
+   The truth, however, is that JVM implementations are (and have been for many years) very good at efficiently managing
+   short-lived objects.
+   Using single-instance classes as a rudimentary object caching mechanism is a terrible use of the Java platform.
+   From my experience, this practice not only leads to anti-OO code but also to big, un-cohesive, stateless classes with
+   many methods, the exact opposite of small, cohesive, and stateful classes which are what true objects are about.
+</p>
+
+<h3 id="static">
+   <a href="#static">Use of <code>static</code></a>
+</h3>
+<p>
+   The use of classes containing only <code>static</code> methods is the best choice when none of the methods operate on
+   any state (for example, the <code>Math</code> class), or the actual state is stored in a separate context object,
+   such as the HTTP request context or the persistence context.
+   For this last situation, consider an application that has a persistence subsystem which provides access to a
+   relational database.
+   One possibility is to inject instances of work unit objects (an Hibernate <code>Session</code>, or a JPA
+   <code>EntityManager</code>) wherever they are needed, and use the persistence API directly.
+   A better approach, in my experience, is to use a <em>static facade</em> which encapsulates all access from the
+   application to the persistence subsystem.
+   The benefits of this are many, not the least of which is that it actually provides <em>more</em> flexibility than the
+   more direct, instance-based, approach, while providing a tight and easily accessible client API.
+</p>
+<p>
+   Another recommended usage of static methods is presented in "Item 1: Consider static factory methods instead of
+   constructors", again in the "Effective Java" book.
+</p>
+
+<h2 id="testability">
+   <a href="#testability">Testability</a>
+</h2>
+<p>
+   The limitations found in conventional mocking tools have come to be associated with the idea of "untestable code".
+   Often, we see the restrictions resulting from those limitations considered as inevitable, or even as something that
+   could be beneficial.
+   The JMockit toolkit, which breaks away from these limitations and restrictions, shows that in fact there is no such
+   thing as truly untestable code. There is, of course, code that is harder to test because it is too complicated and
+   convoluted, lacks cohesion, and so on and so forth.
+</p>
+<p>
+   Therefore, by eliminating the technical limitations traditionally involved in the isolation of a unit from its
+   dependencies, we get the benefit that no artificial design restrictions must be imposed on production code for the
+   sake of unit testing.
+   Additionally, it becomes possible to write unit tests for legacy code, without the need for any prior adaptation or
+   refactoring.
+   The ability to create automated regression tests for existing code before <em>refactoring</em> it is extremely
+   valuable, as implied by the very <a href="http://martinfowler.com/bliki/DefinitionOfRefactoring.html">definition</a>
+   of the term.
+   In short, with a less restrictive mock testing tool the <em>testability</em> of production code becomes less of an
+   issue, giving developers more freedom to use the language and more design choices when creating new code, while
+   facilitating the initial creation of tests for legacy code.
+</p>
+<p>
+   Another way of thinking about testability is to differentiate between <em>intrinsic</em> and <em>extrinsic</em>
+   testability.
+   In the first case, we can conclude that whatever makes the code more or less <em>maintainable</em> also makes it more
+   or less easily testable, and vice-versa.
+   For example, methods with higher <em>cyclomatic complexity</em> (basically, the number of different execution paths
+   through the method) require more tests to be fully covered, while at the same time being more difficult to understand
+   and change; in other words, intrinsic testability is not particularly useful as a separate measure for code quality,
+   if it is nothing more than <em>maintainability</em>.
+   In the second case, <em>extrinsic testability</em>, we are not really considering properties of the production code,
+   but instead properties of the <em>tools</em> used to <em>test</em> that code.
+   Therefore, when a tool for testing code in isolation provides an easy to use API that is able to deal with
+   <em>all</em> possible isolation scenarios, such extrinsic concerns for testability completely disappear.
+</p>
+
+<h2 id="coverage">
+   <a href="#coverage">Code Coverage</a>
+</h2>
+<p>
+   In addition to mocking APIs, the JMockit toolkit includes its own code coverage tool,
+   <strong>JMockit Coverage</strong>.
+   This tool aims to provide the following benefits.
+</p>
+<ol>
+   <li>
+      Bytecode modification performed only at runtime, therefore avoiding the creation of undesirable files.
+      No extra source or class files are created, and no coverage data file is generated unless explicitly requested.
+      The only files created or modified are those that the user really wants as the desired output.
+   </li>
+   <li>
+      Running tests with JMockit Coverage does not require the use of any particular command line script, Ant task,
+      Maven plugin, or IDE-specific plugin.
+      The tool applies the idea of convention over configuration, trying to make it as easy as possible for the
+      developer to run tests with code coverage: by simply adding one jar file to the classpath, and optionally
+      specifying certain initialization parameters to the JVM (system properties settable with "<code>-D</code>" or its
+      Ant/Maven equivalent).
+   </li>
+   <li>
+      No need to specify which classes should be considered for coverage and which should not (by default, as they can
+      be explicitly specified if needed).
+      All code under test will automatically be analyzed for coverage.
+      Specifically, the tool will gather coverage data for all production code executed by the test suite, excluding
+      classes defined inside jar files (on the assumption that such code belongs to libraries used by the code under
+      test).
+   </li>
+   <li>
+      An HTML report and/or a serialized output file can be easily generated at the end of each test run.
+      The first requires no extra configuration as it is the default form of coverage output; the second only requires
+      setting the "<code>coverage-output</code>" system property.
+      For the generation of the HTML report, Java source files are automatically searched in all "src" directories
+      under the working directory.
+   </li>
+   <li>
+      In code coverage reports, each line of production code can be accurately linked to the lines
+      in test code which caused their execution, for each individual execution of each line of code.
+      (However, this feature is inactive by default, because of the higher runtime cost and the larger resulting HTML
+      report.)
+   </li>
+   <li>
+      Besides a <em>line coverage</em> metric, a <em>path coverage</em> metric is also made available.
+      Both metrics are calculated and shown at the source file, package, and global levels.
+      For path coverage, each possible path through a method or constructor can be interactively displayed in the HTML
+      report.
+   </li>
+   <li>
+      <em>Intra-line</em> coverage is provided, with the appropriate red/green coloring in the HTML report for each
+      conditionally executed line segment.
+   </li>
+</ol>
+<p>
+   In short, the two main differentiating factors for JMockit Coverage are that 1) it generates the coverage report as
+   easily as possible and without depending on special conditions or requiring specific plugins for Java IDEs or build
+   tools; and 2) it provides newer and more sophisticated <em>coverage metrics</em>, such as path coverage and
+   true line coverage.
+</p>
+<hr/>
+<div class="links">
+  <a href="tutorial/CodeCoverage.html">Running tests with JMockit Coverage</a>
+  <a href="coverage-sample/index.html">Sample coverage report</a>
+</div>
+<div class="footer">
+   Get help from the <a href="http://groups.google.com/group/jmockit-users">JMockit Users Group</a> or
+   <a href="http://stackoverflow.com/questions/tagged/jmockit">Stack Overflow</a>.
+</div>
+</body>
+</html>
