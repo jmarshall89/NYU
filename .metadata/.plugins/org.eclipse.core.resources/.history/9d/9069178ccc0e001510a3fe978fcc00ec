@@ -1,0 +1,171 @@
+package com.learnvest.blazewater.plan;
+
+import static com.learnvest.blazewater.account.asset.NonRetireAssetType.isRealEstate;
+import static com.learnvest.time.Dates.yearsBetween;
+import static com.learnvest.util.BigDecimals.ZERO$;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+
+import com.google.common.base.Optional;
+import com.learnvest.anno.ExposeNone;
+import com.learnvest.anno.Inject;
+import com.learnvest.blazewater.account.AccountGroup;
+import com.learnvest.blazewater.account.asset.Asset;
+import com.learnvest.blazewater.account.asset.AssetType;
+import com.learnvest.blazewater.account.asset.Assets;
+import com.learnvest.blazewater.account.debt.Debt;
+import com.learnvest.blazewater.account.debt.DebtType;
+import com.learnvest.blazewater.account.debt.Debts;
+import com.learnvest.blazewater.account.ideal.Ideal;
+import com.learnvest.blazewater.account.ideal.Ideals;
+import com.learnvest.blazewater.account.ideal.RetirementSizing;
+import com.learnvest.blazewater.dto.action.Accounts;
+import com.learnvest.blazewater.dto.action.AssetTotals;
+import com.learnvest.blazewater.dto.action.DebtTotals;
+import com.learnvest.blazewater.dto.action.DesiredGoal;
+import com.learnvest.blazewater.dto.action.Snapshot;
+import com.learnvest.blazewater.dto.action.SnapshotMeta;
+import com.learnvest.blazewater.dto.action.Total;
+import com.learnvest.blazewater.dto.goals.GoalPackage;
+import com.learnvest.blazewater.household.Household;
+
+public class SnapshotBuilder {
+    @Inject private transient String id;
+    @Inject private transient KeyDates keyDates;
+    @Inject private transient Household household;
+    @Inject private transient Assets assets;
+    @Inject private transient Debts debts;
+    @Inject private transient Ideals ideals;
+    @Inject private transient RetirementSizing retSizing;
+
+    @Inject @ExposeNone private BudgetBuilder budgetBuilder = new BudgetBuilder();
+
+    public Snapshot build(DateTime ts, Optional<Option> option, Optional<GoalPackage> p) {
+        return new Snapshot()
+            .withMeta(createMeta(keyDates.planStart, ts, option, p))
+            .withBudget(budgetBuilder.build())
+            .withAccounts(createAccounts())
+            .withDesiredGoals(createDesiredGoals());
+    }
+
+    private List<DesiredGoal> createDesiredGoals() {
+        List<DesiredGoal> goals = new ArrayList<DesiredGoal>();
+        for (Ideal ideal : ideals) {
+            LocalDate targetDate = ideal.targetDate();
+            DesiredGoal goal = new DesiredGoal()
+                .withType(ideal.type().toString())
+                .withName(ideal.name().or("").toString())
+                .withRank(ideal.rank())
+                .withProgress(ideal.progress().initialProgress().doubleValue())
+                .withTimeframe(timeframe(targetDate))
+                .withSize(ideal.targetAmt().doubleValue());
+
+            goals.add(goal);
+        }
+
+        return goals;
+    }
+
+    private int timeframe(LocalDate date) {
+        return yearsBetween(keyDates.planStart, date, true);
+    }
+
+    private Accounts createAccounts() {
+        AssetTotals assetTotals = createAsssets();
+        Double assetAgg = assetTotals.total();
+
+        DebtTotals debtTotals = createDebts();
+        Double debtAgg = debtTotals.total();
+
+        return new Accounts()
+            .withAssets(assetTotals)
+            .withDebts(debtTotals)
+            .withTotal(new Total()
+                .withAssets(assetAgg)
+                .withDebts(debtAgg)
+                .withNet(assetAgg - debtAgg));
+    }
+
+    private AssetTotals createAsssets() {
+        BigDecimal ret = ZERO$;
+        BigDecimal cash = ZERO$;
+        BigDecimal otherInv = ZERO$;
+        BigDecimal realEstate = ZERO$;
+        BigDecimal other = ZERO$;
+
+        for (Asset asset : assets) {
+            AssetType type = asset.type();
+            BigDecimal balance = asset.balance();
+
+            if (type.isRetireAsset()) {
+                ret = ret.add(balance);
+            } else if (type.group() == AccountGroup.CASH_EQUIV) {
+                cash = cash.add(balance);
+            } else if (isRealEstate(type)) {
+                realEstate = realEstate.add(balance);
+            } else if (type.group() == AccountGroup.SECURITIES){
+                otherInv = otherInv.add(balance);
+            } else {
+                other = other.add(balance);
+            }
+        }
+
+        return new AssetTotals()
+            .withRetirement(ret.doubleValue())
+            .withCash(cash.doubleValue())
+            .withOtherInvested(otherInv.doubleValue())
+            .withRealEstate(realEstate.doubleValue())
+            .withOther(other.doubleValue());
+    }
+
+    private DebtTotals createDebts() {
+        BigDecimal credit = ZERO$;
+        BigDecimal studentLoan = ZERO$;
+        BigDecimal mortgage = ZERO$;
+        BigDecimal other = ZERO$;
+
+        for (Debt debt : debts) {
+            DebtType type = debt.type();
+            BigDecimal balance = debt.balance();
+
+            if (type.group() == AccountGroup.CREDIT_CARDS) {
+                credit = credit.add(balance);
+            } else if (type.group() == AccountGroup.STUDENT_LOANS) {
+                studentLoan = studentLoan.add(balance);
+            } else if (type.group() == AccountGroup.MORTGAGES) {
+                mortgage = mortgage.add(balance);
+            } else {
+                other = other.add(balance);
+            }
+        }
+
+        return new DebtTotals()
+            .withCredit(credit.doubleValue())
+            .withMortgage(mortgage.doubleValue())
+            .withStudentLoan(studentLoan.doubleValue())
+            .withOther(other.doubleValue());
+    }
+
+    private SnapshotMeta createMeta(LocalDate planStart, DateTime ts, Optional<Option> option, Optional<GoalPackage> p) {
+        SnapshotMeta meta = new SnapshotMeta()
+            .withId(id)
+            .withTs(ts.toString())
+            .withPlanStart(planStart.toString());
+
+        if (option.isPresent()) {
+            meta.setSelectedOption(option.get().id());
+        }
+
+        if (p.isPresent()) {
+            meta.setSelectedPackage(p.get().getTestId());
+        }
+
+        return meta;
+    }
+
+}

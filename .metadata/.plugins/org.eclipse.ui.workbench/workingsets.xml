@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workingSetManager>
+<workingSet editPageId="org.eclipse.ui.resourceWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1433777859003_1" label="blazewater-bay" name="blazewater-bay">
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/blazewater-commons" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/blazewater-output-conversion" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/blazewater-util" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/blazewater-delta" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/blazewater" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/blazewater-time" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/blazewater-dto" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/blazewater-local" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/blazewater-core" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/blazewater-gson" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/blazewater-anno" type="4"/>
+</workingSet>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1433777816417_0" label="Window Working Set" name="Aggregate for window 1433777816416"/>
+</workingSetManager>

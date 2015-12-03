@@ -1,0 +1,159 @@
+nginx:
+  image: build.learnvest.net:5000/lvnginx:latest
+  links:
+    - mylvfe
+    - nodecms
+    - lvcms
+    - dradis
+    - moneycenter
+    - planhtml
+    - plancustomcontent
+    - planning
+    - blazewater
+  ports:
+    - "80:80"
+    - "443:443"
+  volumes:
+   - /docker/log/nginx:/var/log
+  environment:
+    - TZ=EST
+
+mylvfe:
+  image: build.learnvest.net:5000/mylvfe:latest
+  volumes:
+    - /docker/log/mylvfe:/var/log
+  environment:
+    - TZ=EST
+
+nodecms:
+  image: build.learnvest.net:5000/nodecms:latest
+  volumes:
+    - /docker/log/nodecms:/var/log
+  environment:
+    - TZ=EST
+
+moneycenter:
+  image: build.learnvest.net:5000/nodemc:latest
+  ports:
+    - "3100:3100"
+  links:
+    - dradis 
+  environment:
+    - TZ=EST
+
+lvcms:
+  image: build.learnvest.net:5000/lvcms:latest
+  links:
+    - lvcmsdb
+  volumes:
+    - /docker/log/lvcms:/var/log
+  environment:
+    - TZ=EST
+
+lvcmsdb:
+  image: build.learnvest.net:5000/lvcmsdb:latest
+  environment:
+    - TZ=EST
+
+dradis:
+  image: build.learnvest.net:5000/dradis:latest
+  links:
+    - goldendb
+    - redis
+  volumes:
+    - /docker/log/dradis/tomcat:/tomcat/logs
+    - /docker/log/dradis:/var/log
+  environment:
+    - TZ=EST
+
+goldendb:
+  image: build.learnvest.net:5000/goldendb:latest
+  volumes:
+    - /docker/log/goldendb:/var/log
+  environment:
+    - TZ=EST
+
+planning:
+  image: build.learnvest.net:5000/planning:latest
+  volumes:
+    - /docker/log/planning:/var/log
+  links:
+    - blazewater
+    - mongo
+    - pdfgenerator
+    - planhtml
+    - rabbitmq
+    - dradis
+  ports:
+    - "7081:8081"
+  environment:
+    - TZ=EST
+
+blazewater:
+  image: build.learnvest.net:5000/blazewater_april_demo:latest
+  volumes:
+    - /docker/log/blazewater:/var/log
+  links:
+    - rabbitmq
+  environment:
+    - TZ=EST
+
+redis:
+  image: redis:latest
+  environment:
+    - TZ=EST
+
+pdfgenerator:
+  image: build.learnvest.net:5000/pdf-generator:latest
+  ports:
+    - "8080:8080"
+  volumes:
+    - /docker/log/pdf-generator:/var/log
+  links:
+    - planhtml
+  environment:
+    - TZ=EST
+
+planhtml:
+  image: build.learnvest.net:5000/planhtml:latest
+  ports:
+    - "3000:3000"
+  volumes:
+    - /docker/log/plan-html:/var/log
+  environment:
+    - TZ=EST
+
+plancustomcontent:
+  image: build.learnvest.net:5000/plancustomcontent:latest
+  ports:
+    - "3200:3200"
+  volumes:
+    - /docker/log/plan-custom-content:/var/log
+  links:
+    - planning
+  environment:
+    - TZ=EST
+
+packetbeat:
+  image: build.learnvest.net:5000/packetbeat:latest
+  net: host
+  ports:
+    - "9090:9090"
+  environment:
+    - TZ=EST
+
+packetbeatagent:
+  image: build.learnvest.net:5000/packetbeat-agent:latest
+  net: host
+  environment:
+    - PACKETBEATES_SERVICE_HOST=localhost
+    - PACKETBEATES_SERVICE_PORT=9200
+    - TZ=EST
+
+mongo:
+  image: mongo:latest
+  environment:
+    - TZ=EST
+
+rabbitmq:
+  image: rabbitmq:latest

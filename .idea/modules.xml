@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/blazewater/blazewater-commons/blazewater-anno/blazewater-anno.iml" filepath="$PROJECT_DIR$/blazewater/blazewater-commons/blazewater-anno/blazewater-anno.iml" />
+      <module fileurl="file://$PROJECT_DIR$/blazewater/blazewater-bay.iml" filepath="$PROJECT_DIR$/blazewater/blazewater-bay.iml" />
+      <module fileurl="file://$PROJECT_DIR$/blazewater/blazewater-commons/blazewater-commons.iml" filepath="$PROJECT_DIR$/blazewater/blazewater-commons/blazewater-commons.iml" />
+      <module fileurl="file://$PROJECT_DIR$/blazewater/blazewater-core/blazewater-core.iml" filepath="$PROJECT_DIR$/blazewater/blazewater-core/blazewater-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/blazewater/blazewater-commons/blazewater-delta/blazewater-delta.iml" filepath="$PROJECT_DIR$/blazewater/blazewater-commons/blazewater-delta/blazewater-delta.iml" />
+      <module fileurl="file://$PROJECT_DIR$/blazewater/blazewater-dto/blazewater-dto.iml" filepath="$PROJECT_DIR$/blazewater/blazewater-dto/blazewater-dto.iml" />
+      <module fileurl="file://$PROJECT_DIR$/blazewater/blazewater-commons/blazewater-gson/blazewater-gson.iml" filepath="$PROJECT_DIR$/blazewater/blazewater-commons/blazewater-gson/blazewater-gson.iml" />
+      <module fileurl="file://$PROJECT_DIR$/blazewater/blazewater-local/blazewater-local.iml" filepath="$PROJECT_DIR$/blazewater/blazewater-local/blazewater-local.iml" />
+      <module fileurl="file://$PROJECT_DIR$/blazewater/blazewater-output-conversion/blazewater-output-conversion.iml" filepath="$PROJECT_DIR$/blazewater/blazewater-output-conversion/blazewater-output-conversion.iml" />
+      <module fileurl="file://$PROJECT_DIR$/blazewater/blazewater-commons/blazewater-time/blazewater-time.iml" filepath="$PROJECT_DIR$/blazewater/blazewater-commons/blazewater-time/blazewater-time.iml" />
+      <module fileurl="file://$PROJECT_DIR$/blazewater/blazewater-commons/blazewater-util/blazewater-util.iml" filepath="$PROJECT_DIR$/blazewater/blazewater-commons/blazewater-util/blazewater-util.iml" />
+    </modules>
+  </component>
+</project>
