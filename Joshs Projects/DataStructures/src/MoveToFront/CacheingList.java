@@ -48,8 +48,14 @@ public class CacheingList<Item> implements Iterable<Item> {
     }
 
     private void remove(Node node) {
-        Node remove = node.next;
-        if (remove.next != null) {
+        Node remove;
+        if (node == null) {
+            first = first.next;
+            return;
+        } else {
+            remove = node.next;
+        }
+        if (remove != null) {
             node.next = remove.next;
         } else {
             node.next = null;
